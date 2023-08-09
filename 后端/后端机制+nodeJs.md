@@ -1,8 +1,4 @@
-# 1. webpack
-
-# 2. node.js
-
-## 2.1 概述
+# 1.  概述
 
 - node.js用作服务端，比如：小程序，手机APP，网站，游戏
 - 通俗的说，node.js要做的事是：让每一个人访问我做的应用，比如网站
@@ -17,25 +13,25 @@
   - node.js代码运行在服务器，属于B/S架构。
   - 服务器先保存HTML，css，JavaScript代码，浏览器通过URL向服务器发送请求，运行在服务器的node.js代码会将服务器的资源返回给服务器。
 
-## 2.2 HTTP协议
+# 2. HTTP协议
 
-### 2.2.1 概述
+## 2.1 概述
 
 - Hyper Text Transfer Protocol 超文本传输协议，本质是一系列规则。
 - 将HTML（Hypertext Markup Language）文档从web服务器传送到客户端浏览器
 - 这个协议详细规定了 浏览器和==万维网==（服务器 ）之间互相通信的规则
 - 属于应用层的面向对象的协议
 
-### 2.2.2 与TCP/IP关系
+## 2.2 与TCP/IP关系
 
-![TCP_IP](实例图片\TCP_IP.jpg)
+![TCP_IP](..\实例图片\TCP_IP.jpg)
 
 - Transmission Control Protocol/Internet Protocol 传输控制协议/网际协议
 - TCP/IP协议其实是一系列与互联网相关联的协议集合总称
 - TCP/IP协议不仅仅指的是TCP 和IP两个协议，而是指一个由FTP、[SMTP](https://so.csdn.net/so/search?q=SMTP&spm=1001.2101.3001.7020)、TCP、UDP、IP等协议构成的协议簇， 只是因为在TCP/IP协议中TCP协议和IP协议最具代表性，所以被称为TCP/IP协议。
 - 关系：HTTP协议是构建在TCP/IP协议之上的，是TCP/IP协议的一个子集
 
-### 2.2.3 HTTP协议的内容
+## 2.3 HTTP协议的内容
 
 - http协议本质是通信规则，包括请求结构，请求方法，各种机制等。这些全部体现在http报文中
 
@@ -53,7 +49,7 @@
       - 参考：[HTTP 标头（header） - HTTP | MDN (mozilla.org)](https://developer.mozilla.org/zh-CN/docs/web/http/headers)
 
     - 空行
-      
+
     - 请求体：向服务器发送请求的内容
   - 响应报文
 
@@ -83,9 +79,9 @@
   })
   ```
 
-### 2.2.4 请求报文
+## 2.4 请求报文
 
-#### 2.2.4.1 HTTP请求行
+### 2.4.1 HTTP请求行
 
 - 请求方法（get、post、put、delete等）
 
@@ -102,20 +98,20 @@
 
 - HTTP协议版本号
 
-- ==浏览器除了请求体给服务器传递数据，还可以通过请求行中URL路径中的的query和params参数==，[详细跳转](###2.2.8 query和params参数)
+- ==浏览器除了请求体给服务器传递数据，还可以通过请求行中URL路径中的的query和params参数==，[详细跳转](##2.8 query和params参数)
 
-#### 2.2.4.2 HTTP请求头
+### 2.4.2 HTTP请求头
 
 - 格式：『头名：头值』
 - 参考：[HTTP 标头（header） - HTTP | MDN (mozilla.org)](https://developer.mozilla.org/zh-CN/docs/web/http/headers)
 
-#### 2.2.4.3 HTTP请求体
+### 2.4.3 HTTP请求体
 
 - 请求体内容的格式是非常灵活的
   - 可以是空，比如：GET请求
   - 也可以是字符串，还可以是JSON，比如：POST请求
 
-### 2.2.5 响应报文
+## 2.5 响应报文
 
 - 响应行：比如：`HTTP/1.1 200 OK`
   - HTTP/1.1：HTTP协议版本号
@@ -125,7 +121,7 @@
 - 空行
 - 响应体：响应体内容的类型是非常灵活的，常见的类型有 HTML、CSS、JS、图片、JSON
 
-### 2.2.6 node.js中实践http协议的思路
+## 2.6 node.js中实践http协议的思路
 
 - 概述
 
@@ -175,10 +171,10 @@
     1. 浏览器地址输入：127.0.0.1:9000，第一次请求，服务器返回10_table.html
     2. 而在10_table.html里面引用了index.css文件，这会自动触发第二次请求，服务器返回index.css
     3. 继续10_table.html里面引用了index.js文件，这会自动触发第二次请求，服务器返回index.js
-  
-- [关联知识](####2.4.3.1 express-generator工具生成结构)
 
-### 2.2.7 GET和POST请求
+- [关联知识](###4.3.1 express-generator工具生成结构)
+
+## 2.7 GET和POST请求
 
 - get请求场景
   - 浏览器地址栏输入url
@@ -198,18 +194,15 @@
   - 相对来说，post请求会比get请求更安全，因为浏览器中的URL参数会暴露在地址栏
   - get请求有大小限制，一般为2k，而post请求则没有大小限制
 
-### 2.2.8 query和params参数
+## 2.8 query和params参数
 
 - 概述
 
   1. 浏览器想给服务器传数据，如果比较轻量，虽然用请求体传数据有点浪费，勉强还行。那么如果数据要体现在路由里的路径呢？请求体无能为力。
 
-  2. 实现传递数据体现在路由里的路径，方法是在路径里加入query和params参数实现传数据
+  2. 实现传递数据体现在路由里的路径，方法是在路径里加入query和params参数实现传数据：
 
-     ```markdown
-     1.浏览器输入：http://127.0.0.1/creat?a=100&b=200
-     
-     ```
+     浏览器输入：http://127.0.0.1/creat?a=100&b=200
 
      
 
@@ -238,9 +231,11 @@
 
        
 
-    1. 浏览器输入：http://127.0.0.1/account?id=100&count=200，或者其他get请求的途径
-    2. query参数有明显的特征：?和&，因此query参数不太安全
-    3. 前面服务端1中路由规则里的`req.query.id`其实就是100，`req.query.id`是200
+    2. 浏览器输入：http://127.0.0.1/account?id=100&count=200，或者其他get请求的途径
+
+    3. query参数有明显的特征：?和&，因此query参数不太安全
+
+    4. 前面服务端1中路由规则里的`req.query.id`其实就是100，`req.query.id`是200
 
   - params参数
 
@@ -280,7 +275,7 @@
 
 ==注意，query和params参数并不受请求方法的限制。无论使用GET方法还是POST方法，都可以获取和传递这些参数==
 
-### 2.2.9 局域网ip、广域网ip、localhost
+## 2.9 局域网ip、广域网ip、localhost
 
 - ip本身是一个数字标识，用来标志网络设备，实现设备间通信
 
@@ -306,9 +301,9 @@
 
   
 
-## 2.3 开发生态
+# 3 开发生态
 
-### 2.3.1 模块化
+## 3.1 模块化
 
 - 主架流程(本质是导入js文件)
 
@@ -375,7 +370,7 @@
 
        - 如果package.json文件不存在，则会直接导入文件夹下的**index.js**和**index.json**，如何还没有找到，则会报错。
 
-### 2.3.2包管理
+## 3.2包管理
 
 - 概述
   1. 包：package，代表了一组特定功能的源码集合
@@ -383,7 +378,7 @@
   3. 包括：npm（官方内置），yarn，cnpm
 - [关联](#5. npm "具体介绍")
 
-### 2.3.3 NVM：node版本管理
+## 3.3 NVM：node版本管理
 
 - nvm 全称 `Node Version Manager` 顾名思义它是用来管理 node 版本的工具，方便切换不同版本的 Node.js
 
@@ -406,24 +401,24 @@
 
      
 
-## 2.4 技术生态
+# 4 技术生态
 
-### [2.4.1HTTP协议](##2.2 HTTP协议)
+## [4.1 HTTP协议](#2 HTTP协议)
 
-### [2.4.2包管理工具](###2.3.2包管理)
+## [4.2 包管理工具](##3.2包管理)
 
-### 2.4.3 Express框架
+## 4.3 Express框架
 
 - [Express 中文网 (nodejs.cn)](https://express.nodejs.cn/)
 
-- [关联知识](###2.2.6 node.js中实践http协议的思路)
+- [关联知识](##2.6 node.js中实践http协议的思路)
   - 原生的node.js实践http协议，三步：
     1. 设置请求方法和路径
     2. 通过路径和方法找到资源
     3. 读取资源返还给浏览器
   - 甚至对于动态资源的处理也很麻烦
 
-#### 2.4.3.1 express-generator工具生成结构
+### 4.3.1 express-generator工具生成结构
 
 - 安装：`npm install -g express-generator`
 
@@ -512,7 +507,7 @@
 
   - 所以，==express架构分为：路由，中间件，模板引擎==，其他很多东西都包含在中间件中，比如静态资源等
 
-#### 2.4.2.2 路由规则管理
+### 4.2.2 路由规则管理
 
 - 路由是http里的概念，一个路径和方法对应一种资源，也就是对应浏览器的请求req和服务器的响应res
 
@@ -543,7 +538,7 @@
 
 - 路由管理模块化方法：
 
-  - 具体业务路由，放在[express-generator工具](#2.4.3.1 Express结构)下的routes文件夹下
+  - 具体业务路由，放在[express-generator工具](###4.3.1 express-generator工具生成结构)下的routes文件夹下
 
     1. 导入express，引入Router
     2. 设置路由规则，中间件格式：
@@ -572,9 +567,10 @@
     app.use('/', indexRouter);
     ```
 
-#### 2.4.3.3 中间件
+### 4.3.3 中间件
 
 - 概述：
+
   1. 明确一点，中间件和路由自始至终都密不可分
   2. 中间件本质是回调函数，作用是使用函数封装公共操作，简化代码
   3. 中间件函数是应用在http协议的请求-响应周期中。中间件函数可以访问 [请求对象](https://express.nodejs.cn/en/4x/api.html#req) (`req`)、[响应对象](https://express.nodejs.cn/en/4x/api.html#res) (`res`) 和 `next` 函数。
@@ -675,7 +671,7 @@
 
   - 作用域不一样
 
-#### 2.4.3.4 模板引擎
+### 4.3.4 模板引擎
 
 - 概述
 
@@ -773,7 +769,7 @@
 
   5. [ejs语法](https://ejs.bootcss.com/#install)
 
-#### 2.4.3.5 Lowdb数据库
+### 4.3.5 Lowdb数据库
 
 - 概述
 
@@ -866,9 +862,10 @@
   })
   ```
 
-### 2.4.4 数据库MongoDB
+## 4.4 数据库MongoDB
 
 - 概述
+
   1. 基于分布式文件存储的数据库
   2. 管理数据，增删改查
   3. 相比于纯文件管理数据，数据库管理数据有如下特点：
@@ -882,9 +879,9 @@
   - 集合（collection） 集合类似于 JS 中的数组，在集合中可以存放很多文档 
   - 文档（document） 文档是数据库中的最小单位，类似于 JS 中的对象
 
-  ![mongodb架构](assert\mongodb架构.png)
+  ![mongodb架构](..\实例图片\mongodb架构.png)
 
-#### 2.4.4.1 下载安装
+### 4.4.1 下载安装
 
 - [下载地址](https://www.mongodb.com/try/download/community-kubernetes-operator)
 
@@ -928,11 +925,12 @@
   - [Robo 3T 免费]( https://github.com/Studio3T/robomongo/releases)
   - [Navicat 收费](https://www.navicat.com.cn/) 
 
-#### 2.4.4.2 mongoose代码操作mongodb
+### 4.4.2 mongoose代码操作mongodb
 
 [参考](https://blog.csdn.net/weixin_45828332/article/details/114120710)
 
 - 概述
+
   1. Mongoose 是一个可以通过Node来操作MongoDB数据库的一个模块
   2. Mongoose 是一个对象文档模型（ODM）库，它是对Node原生的MongoDB模块进行了进一步的优化封装
 
@@ -954,7 +952,7 @@
 
   5. 回调函数里写业务逻辑里的增删改查
 
-     -  创建文档结构Schema对象，设置文档字段和数据类型
+     - 创建文档结构Schema对象，设置文档字段和数据类型
 
        ```js
        let BookSchema = new mongoose.Schema({
@@ -1208,27 +1206,27 @@
 
     
 
-### 2.4.5 API接口
+## 4.5 API接口
 
 - 概述： API (Application Program Interface)，所以有时也称之为 API 接口
 
 - 分类：
-  
+
   - 软件开发工具包sdk（ Software Development Kit）中实现某种功能的函数
   - 以网络请求为基础的API
-  
+
 - 包API
-  
+
   - 代码是在本地，调用封装的函数或者对象就可以实现API功能
-  
+
   - 不需要经过网络请求
-  
+
 - 网络API
-  
+
   - 代码不在本地，而是提供API的人将代码运行在服务器，通过网络请求提供调用
-  
+
   - 前后端（客户端和服务端）通信的桥梁
-  
+
   - 跟http协议和路由密不可分
   - 简单理解：一个接口就是服务中的一个路由规则+请求+响应结果
   - 接口组成：
@@ -1237,7 +1235,7 @@
     3. 请求参数
     4. 响应结果
 
-#### 2.4.5.1 RESTful API
+### 4.5.1 RESTful API
 
 [RESTful API](https://restfulapi.cn/)
 
@@ -1249,7 +1247,7 @@
 
   - RESTful API就是一套结构清晰、符合标准、易于理解、扩展方便让大部分人都能够理解接受的接口风格
 
-![RESTful API](assert\RESTful API.jpg)
+![RESTful API](..\实例图片\RESTful API.jpg)
 
 - 特点
 
@@ -1276,7 +1274,7 @@
 
   4. 返回结果是json格式
 
-#### 2.4.5.2 API测试图形工具：apifox
+### 4.5.2 API测试图形工具：apifox
 
 - 这种工具总共有三种
   - apifox https://www.apifox.cn/ (中文)
@@ -1294,9 +1292,10 @@
   4. ==图形工具还有一个功能，生成接口文档，在线文档，在线运行、调试==
 - [apifox很强大](开发辅助工具)，[视频教学](https://www.bilibili.com/video/BV1ae4y1y7bf/?vd_source=5a1ce44ffe3923badc10b4b00217e698)
 
-#### 2.4.5.3 API测试命令行工具：cURL
+### 4.5.3 API测试命令行工具：cURL
 
 - 概述
+
   - client url
   - 一个计算机命令行工具，通过命令行与服务器进行数据交互
   - 可以做的事：文件上传、下载，获取信息
@@ -1327,7 +1326,7 @@
 
 - [更多参数选项参考](https://zhuanlan.zhihu.com/p/336945420)
 
-#### 2.4.5.4 RESTful API编程思路
+### 4.5.4 RESTful API编程思路
 
 - 本质还是路由规则+资源，只不过对方法和路径有限制，返回结果有格式限制
 - 请求方法：
@@ -1340,7 +1339,7 @@
   - msg
   - data
 
-### 2.4.6 会话控制
+## 4.6 会话控制
 
 - 背景
 
@@ -1418,7 +1417,7 @@
 
 - 问题2：假如我是互联网用户，通过浏览器等客户端访问服务器里的内容，我也登陆了用户名密码，服务器就知道了我是谁。按道理说，我在网站的行为，服务器应该很清楚啊，服务器大可以创建一个数据库，用一些字段记录我的行为。干嘛非要通过cookie获取我的行为信息？
 
-#### 2.4.6.1 cookie技术
+### 4.6.1 cookie技术
 
 - cookie字段含义
 
@@ -1501,7 +1500,7 @@
 
      - option: 类型为对象，可使用的属性对应那些字段，如下
 
-       ![cookie-parser](assert\cookie-parser.png)
+       ![cookie-parser](..\实例图片\cookie-parser.png)
 
 - 关于签名   `res.cookie(name,value,{signed:true})`
 
@@ -1517,7 +1516,7 @@
 
   - 签名其实就是，对某一个信息进行加密之前，加上一个只有我才知道的密钥， 对数据做一个签名
 
-    ![签名](assert\签名.png)
+    ![签名](..\实例图片\签名.png)
 
 - 签名编程：cookie里的value值，经过加密，防止修改，额外操作
 
@@ -1555,23 +1554,24 @@
   app.listen(3000);
   ```
 
-#### 2.4.6.2 session技术
+### 4.6.2 session技术
 
 - 理解session的基本要点：
+
   - session存储在服务器，数据库或者内存
   - session本身也有机制，或者说session信息的选项，类似于cookie的那些非name和value字段
   - session的思想是用户数据存在数据库，给cookie返回一个索引，也就是说，cookie里的那些字段，原本就是服务器指定的，一切不变，只是value的值不是原来的明文或者加密的，而是一个索引，真正的数据转移到服务器了。
-  
+
 - 编程思路
-  
+
   1. 安装`express-session`中间件操作session : `npm i express-session`
-  
+
   2. 安装`connect-mongo`中间件 连接数据库: `npm i express-session`
-  
+
   3. 导入两个中间件
-  
+
   4. 配置中间件
-  
+
      ```js
      // 导入session中间件
      const session = require('express-session')
@@ -1593,18 +1593,18 @@
      })
      
      ```
-  
+
      session中间件里的配置很全面：
-  
+
      - cookie：里面正是浏览器里cookie字段，不包括name和value，这里的配置的是cookie的性质
      - name：cookie里的name。cookie的value不需要指定，这是seesion的规定死的机制，value是session数据的索引。
      - secret：密钥，对value，也就是sessionId加盐，防止篡改
      - store：session里真正的数据存在哪里
-  
+
      [深入浅出 Express 中间件 Express-session)](https://zhuanlan.zhihu.com/p/409813376)
-  
+
   5. session中间件放到路由中，给session添加真正的数据。（==当然可以设置为全局中间件，大多数情况是全局中间件==）
-  
+
      ```js
      // 登陆，服务端处理
      router.post('/login',sessionMiddleware,(req,res,next)=>{
@@ -1638,12 +1638,12 @@
          )
      })
      ```
-  
+
      - `req.session.username = data.username`其中，`req.session.username`是`session`中的字段`username`，`data.username`是从服务器数据库里读取的数据
      - 一般情况有两个数据库：用户数据库，比如用户名密码。session数据库，里面是用户的行为数据或者其他的，`req.session.xx`设置字段保存什么数据。session数据保存位置是通过前中间件`session(...store:...)`配置
-  
+
   6. session中间件放路由里，获取session里的数据：`req.session.xx`
-  
+
      ```js
      // 跳转添加记录
      router.get('/account/create', checkLoginMiddleware,function(req, res, next) {
@@ -1653,67 +1653,68 @@
          res.render('create');
      });
      ```
-  
+
      
-  
+
 - 关于表单form
-  
+
   1. form表单里面的input标签加入name属性，必须和数据库字段相同
   2. form表单method属性添加http协议请求方法，action属性添加url
   3. 根据form里的方法和url添加路由规则
 
-#### 2.4.6.3 token技术
+### 4.6.3 token技术
 
 - 特点
+
   - 用户数据存浏览器，但是不在cookie。也不在服务端的session
   - 用户数据虽然在浏览器，但是进行了压缩编码，很小的存储，但是信息却可以存储很多
   - token技术需要手动将token数据添加在请求报文中，一般是放在请求头中。cookie和session技术都是浏览器来自动将cookie数据添加到请求头
   - JWT，JSON Web Token，是实现token技术的根本，JWT 使 token 的生成与校验更规范
-  
+
 - 编程思路
-  
+
   [API参考]([jsonwebtoken - npm (npmjs.com)](https://www.npmjs.com/package/jsonwebtoken))
-  
+
   1. 安装`JWT`：`npm i jsonwebtoken`
-  
+
   2. 导入token：`const jwt = require('jsonwebtoken') `
-  
+
   3. 编码token：`jwt.sign(payload, secretOrPrivateKey, [options, callback])`
-  
+
      - `playload`：编码的数据，可以是表示有效 JSON 的对象文本、buffer，或字符串。
-  
+
      - `secretOrPrivateKey`：密钥，加盐操作，防止数据太简单被破解
-  
+
      - `options`：配置对象，配置选项如下：
-  
+
        - `algorithm`：编码算法，默认值**HS256**
-  
+
        - `expiresIn`：token有效时间，单位是秒
-  
+
        - `notBefore`
-  
+
        - `audience`
-  
+
          ...
-  
+
      - callback：异步的回调函数
-  
+
   4. 解码token：`jwt.verify(token, secretOrPublicKey, [options, callback])`
-  
+
      - `token`：编码的token
-  
+
      - `secretOrPublicKey`：密钥
-  
+
      - `options`：同样是配置对象，配置选项如下：
-  
+
        - `algorithm`s：编码算法，如果未指定，将根据提供的密钥类型使用默认值
-  
+
        - `maxAge`：令牌仍然有效的最长允许期限
-  
+
        - `audience`
-  
+
          ...
-  
+
 - `playload`里面有规则
 
   1. jwt基本知识：`JWT`是`token`的一种形式。主要由`header（头部）`、`payload（载荷）`、`signature（签名）`这三部分字符串组成，这三部分使用"."进行连接，完整的一条`JWT`值为`${header}.${payload}.${signature}`
@@ -1757,21 +1758,21 @@
      signature实际就是jsonwebtoken包里是通过secretOrPublicKey指定
      ```
 
-### 2.4.7 部署
+## 4.7 部署
 
 - [VScode 代码上传仓库（码云，github）](#8. VScode 代码上传仓库（码云，github）)
 
 
 
-## 2.5 程序概念
+# 5 程序概念
 
-### 2.5.1 [路由管理](####2.4.2.2 路由规则管理)
+## 5.1 [路由管理](####2.4.2.2 路由规则管理)
 
-### 2.5.2 [中间件](####2.4.3.3 中间件)
+## 5.2 [中间件](####2.4.3.3 中间件)
 
-### 2.5.3 [模板引擎](####2.4.3.4 模板引擎)
+## 5.3 [模板引擎](####2.4.3.4 模板引擎)
 
-### 2.5.4 CSRF跨站伪造
+## 5.4 CSRF跨站伪造
 
 - 概述
   - CSRF，Cross-site request forgery，跨站请求伪造
@@ -1800,7 +1801,7 @@
 
 # 5. npm
 
-## 5.1[关联](###2.3.2包管理 "回顾开发生态")
+## 5.1[关联](##3.2包管理 "回顾开发生态")
 
 ## 5.2概述
 
@@ -1887,7 +1888,7 @@
 
      - **node_modules** 文件夹，存放下载的包
      - **package-lock.json** 包的锁文件 ，用来锁定包的版本
-  
+
 - 安装依赖：假如项目里没有**node_modules** 文件夹，该怎么办？
 
   ```cmd
@@ -1977,7 +1978,7 @@
 
      - 更新index.js代码
      - 测试是否可用，一般会新建一个test.js来测试
-     -  修改 package.json 中"version": "1.0.1"配置，指定版本号
+     - 修改 package.json 中"version": "1.0.1"配置，指定版本号
      - 发布：`npm publish`
 
   8. 删除：`npm unpublish --force`
@@ -2053,7 +2054,7 @@
 
 ### 5.2.4 配置详解
 
-![package_json](assert\package_json.png "package.json配置")
+![package_json](C:\Users\admin\Desktop\coolShare\assert\package_json.png "package.json配置")
 
 [参考](https://juejin.cn/post/7137110113277444126))
 
