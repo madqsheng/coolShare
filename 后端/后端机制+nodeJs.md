@@ -24,7 +24,7 @@
 
 ## 2.2 与TCP/IP关系
 
-![TCP_IP](..\实例图片\TCP_IP.jpg)
+![TCP_IP](..\示例图片\TCP_IP.jpg)
 
 - Transmission Control Protocol/Internet Protocol 传输控制协议/网际协议
 - TCP/IP协议其实是一系列与互联网相关联的协议集合总称
@@ -879,7 +879,7 @@
   - 集合（collection） 集合类似于 JS 中的数组，在集合中可以存放很多文档 
   - 文档（document） 文档是数据库中的最小单位，类似于 JS 中的对象
 
-  ![mongodb架构](..\实例图片\mongodb架构.png)
+  ![mongodb架构](..\示例图片\mongodb架构.png)
 
 ### 4.4.1 下载安装
 
@@ -1247,7 +1247,7 @@
 
   - RESTful API就是一套结构清晰、符合标准、易于理解、扩展方便让大部分人都能够理解接受的接口风格
 
-![RESTful API](..\实例图片\RESTful API.jpg)
+![RESTful API](..\示例图片\RESTful API.jpg)
 
 - 特点
 
@@ -1500,7 +1500,7 @@
 
      - option: 类型为对象，可使用的属性对应那些字段，如下
 
-       ![cookie-parser](..\实例图片\cookie-parser.png)
+       ![cookie-parser](..\示例图片\cookie-parser.png)
 
 - 关于签名   `res.cookie(name,value,{signed:true})`
 
@@ -1516,7 +1516,7 @@
 
   - 签名其实就是，对某一个信息进行加密之前，加上一个只有我才知道的密钥， 对数据做一个签名
 
-    ![签名](..\实例图片\签名.png)
+    ![签名](..\示例图片\签名.png)
 
 - 签名编程：cookie里的value值，经过加密，防止修改，额外操作
 
