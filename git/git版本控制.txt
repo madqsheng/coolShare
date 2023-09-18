@@ -1,0 +1,300 @@
+找到文件路径
+cd 路径
+
+创建管理库之前的配置
+有了这个命令，下次对另一个项目不用在用了，直接git init
+git config --global user.name 'myname'
+git config --global user.email 'myemail'
+
+命令把这个目录变成Git可以管理的仓库
+git init 
+
+需求：
+1.我已经有个完成了一部分的项目，我想把他放到仓库
+如果已经写了命令：
+git config --global user.name 'myname'
+git config --global user.email 'myemail'
+
+那么：
+在这个项目的路径下
+git init 
+就可以完成这个需求
+
+2.我曾经完成了一部分项目，现在要继续完成，然后怎么继续跟仓库同步
+执行git init 以后根目录下会有.git的隐藏文件，里面记录了创建仓库的信息
+这可以让下一次的修改和仓库同步,整个流程如下：
+
+修改
+git add 
+git commit -m
+
+3.我不是在根目录下修改操作文件，可能根目录下还有文件夹，里面还有修改等，如何同步仓库
+
+操作：
+新建子文件夹test 在子文件夹里新建exe.py文件
+
+直接add文件夹test就可以,里面的exe.py文件也会一起add
+git add test
+git commit -m 'add test/exe.py'
+
+
+示例：
+新建一个文件夹exe，里面新建了test.txt文件
+git config --global user.name 'qusheng'
+git config --global user.email '271293513@qq.com'
+
+git init
+
+git status
+显示已经新建的test.txt文件没有加入版本库
+
+git add test.txt
+
+git commit -m 'add test.txt'
+
+查看修改日志
+git log
+
+操作：
+新建子文件夹test 在子文件夹里新建exe.py文件
+
+直接add文件夹test就可以,里面的exe.py文件也会一起add
+git add test
+git commit -m 'add test/exe.py'
+
+情景：
+我修改test.txt文件
+然后add和coommit到仓库中
+有没有办法回到修改test.txt文件之前？
+
+操作：
+在test.txt文件中修改
+git add test.txt
+git commit -m 'change'
+
+git log --oneline
+输出：
+60a9175 (HEAD -> master) change
+0a84c3a add test/exe.py
+48ec135 add test.txt
+
+git reset --hard 0a84c3a
+
+其结果，在本地文件中，test.txt文件真的回到了修改之前
+
+git reset --hard+版本id   指令帮助我们回到过去
+参考：
+git reset --hard 0a84c3a= git reset --hard HEAD^ 
+git reset --hard 48ec135=  git reset --hard HEAD^^
+git reset --hard HEAD^^=git reset --hard HEAD~2
+
+执行完git reset --hard 0a84c3a
+git log --oneline
+输出：
+0a84c3a (HEAD -> master) add test/exe.py
+48ec135 add test.txt
+
+发现我change(修改test.txt文件)的版本id没有了
+那岂不是没有参照上面的方法回到未来？？
+
+git reflog
+输出：
+0a84c3a (HEAD -> master) HEAD@{0}: reset: moving to 0a84c3a
+60a9175 HEAD@{1}: commit: change
+0a84c3a (HEAD -> master) HEAD@{2}: commit: add test/exe.py
+48ec135 HEAD@{3}: commit (initial): add test.txt
+
+git reset --hard 60a9175
+又可以回到未来！
+果然本地文件test.txt又改变了！
+
+另外参考：
+如果改变了test.txt文件
+然后add了但是没有commit
+可以通过：
+git reset test.txt回到add之前
+
+新情景：
+我有改变test.txt文件
+然后add和commit
+
+然后我我新建一个exe.txt文件
+同样add和commit
+
+现在我要回到我修改test.txt之前，但是我要保留新建的exe.txt文件
+如果用之前的git reset --hard 版本id
+试一下？
+git log --oneline
+>
+b9e005f (HEAD -> master) add exe.txt
+17fb360 another change in test.txt
+60a9175 change
+0a84c3a add test/exe.py
+48ec135 add test.txt
+
+git reset --hard 60a9175
+的确回到了修改test.txt之前，但是新建的exe.txt也没有了
+所以，reset命令是针对整个版本库, 回到版本库的某个过去
+在commit来回穿梭
+
+有没有办法回到单个文件的过去呢？？
+git log --oneline
+>
+b9e005f (HEAD -> master) add exe.txt
+17fb360 another change in test.txt
+60a9175 change
+0a84c3a add test/exe.py
+48ec135 add test.txt
+
+git checkout 60a9175 -- test.txt
+果然如我所料，我们回到了60a9175版本，但是仅仅是test回到了，其他并没有改变。
+
+git log --oneline
+>
+b9e005f (HEAD -> master) add exe.txt
+17fb360 another change in test.txt
+60a9175 change
+0a84c3a add test/exe.py
+48ec135 add test.txt
+
+
+还有一个问题是
+我现在处于b9e005f版本，是test单个文件回到未来的版本，那跟之前没有回到未来的版本有区别吗？
+
+试图验证？
+单一回到未来的test.txt修改。
+add和commit
+
+然后
+git log --oneline
+>
+e99b3f6 (HEAD -> master) only test.txt come back and do some change
+b9e005f add exe.txt
+17fb360 another change in test.txt
+60a9175 change
+0a84c3a add test/exe.py
+48ec135 add test.txt
+
+回到test.txt一个人改变的版本
+git reset --hard HEAD^
+结果显示，
+这个版本记录的是所有人的版本，也就是test.txt一个人回到过去之前的版本
+
+那么，
+test.txt一个人回到过去的信息记录在之后进行改变的版本
+也就是e99b3f6版本
+
+
+另外：
+关于重命名
+git mv test.txt test_rename.txt
+这条命令等于在工作区重命名并且把他add到暂存区
+最后只要commit之后就可以完成重命名了
+
+一个序曲：
+在用git checkout命令的时候会出现失误。
+前面讲到
+git checkout 60a9175 -- test.txt
+这条命令会让test.txt回到60a9175版本，其他小伙伴却不改变
+
+但是会出现一个误操作
+git checkout 60a9175
+类似于git reset --hard 60a9175
+他会让我们整个仓库回到60a9175版本，或者说HEAD指针指向60a9175版本
+之后我们这个基础上的add和commit操作都是在基于60a9175版本
+
+但是，我们的主分支master还在我们回到60a9175版本之前的那个版本
+保留了master的信息
+
+这个操作就是所谓的
+Git HEAD detached from 60a9175 (git HEAD 游离) 
+可能master在b9e005f
+
+换句话说，相当于我们的master主分支在b9e005f
+我们又从60a9175版本开辟了一个匿名分支，之后的操作都是在这个匿名分支上
+
+解决办法是：
+既然我们现在这个匿名分支，我们现在就在此创建一个分支dev
+然后回到master分支
+把创建的dev分支更新的东西merge到master中，之后再删掉dev分支
+具体操作如下
+
+git branch dev                              #在匿名分支上显示创建分支dev
+git checkout master                      #切换到master
+git merge --no-ff -m'merge' dev   #合并
+git branch -d dev                         #删掉dev分支
+至此并没有结束
+合并到master中实际改变了master的工作区
+我们需要查看是不是有冲突，手动解决，然后add和commit
+git add --all
+git commit -m'merge and solve conflict'
+
+需求：
+如何修改每一个commit的提交信息？
+
+查看版本日志
+git log --oneline
+输出：
+1065c78 (HEAD -> master) merge
+eec780b commit in HEAD detached at a0e7b23
+1b91b30 change in master
+a0e7b23 create exe/exe.txt
+c95f724 change
+ab43f43 add
+
+假如我们修改c95f724 change的提交信息
+
+那么就要基于他的父提交ab43f43
+git rebase -i ab43f43
+会进入resbase的编辑文档，键入i进入插入模式
+将c95f724前面的pick改为r
+然后esc   ：wq保存退出
+
+会进入我们要修改commit信息的文档
+同样键入i进入插入模式
+编辑commit信息
+然后esc   ：wq保存退出
+
+另外：
+假如我们仅仅是修改最近一次的commit信息
+
+git log -1  找到最近一条commit信息的版本号(其实可以不用)
+git commit --amend
+进入插入模式，编辑保存退出
+
+
+补充
+git diff --cached
+查看这次已经 add (unstaged) 的修改部分和上个已经 commit 的文件有何不同
+(用于对工作区修改，并且add但是没有commit，执行这个命令看看我们add做了什么修改)
+
+git diff 
+查看这次还没 add (unstaged) 的修改部分和上个已经 commit 的文件有何不同
+(用于对工作区修改，但是没有add，执行这个命令看看我们在工作区做了什么修改)
+
+总结：两者都是跟上一次commit比较，只不过一个是比较暂存区，一个是工作区
+
+如何恢复暂存区和当前工作区一样？
+也就是我工作区修改了并且add了，我想回到add之前
+git reset HEAD
+注意是回到add之前，而不是工作区修改之前
+git reset --hard HEAD
+这条命令则是直接回到上一个commit之前，工作区的修改也恢复了
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

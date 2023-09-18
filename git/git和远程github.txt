@@ -1,0 +1,137 @@
+1.注册github账号
+
+2.配置公私钥
+对于一台新的电脑，想要和远程的github上的仓库进行同步
+就需要配置电脑的公私钥，给github，告诉他是我推送的提交
+方法如下：
+打开git bash
+ssh-keygen -t rsa -C "271293513@qq.com"
+一路回车
+那么在C:\Users\Administrator\.ssh下
+有id_rsa和id_rsa.pub两个文件，这两个就是SSH Key的秘钥对，id_rsa是私钥，不能泄露出去，id_rsa.pub是公钥，可以放心地告诉任何人。
+然后
+登录github，找到settings-SSH and GPG keys添加SSH key
+将id_rsa.pub粘贴进去
+配置完成！
+
+3.github上创建个人仓库
+找到new repository
+注意：
+add .gitignore设置的是不被git管理的文件
+add a Licenses设置的是代码被引用的权限问题
+
+4.把本地仓库同步到github
+①将本地仓库和github上的仓库关联
+在本地仓库目录下，打开git bash，执行命令，模版为：
+git remote add origin git@github.com:michaelliao/learngit.git
+>git remote add是固定关键词
+  origin相当给关联的github仓库取名字，可以自定义
+  git@github.com:michaelliao/learngit.git是github仓库的地址，包含了两种传输协议
+  可以选择ssh或者http协议，在github仓库的clone or download下复制地址
+
+我的实际命令如下：
+git remote add github https://github.com/qswhynot/myexercise.git
+
+②将本地仓库推送到远程仓库
+模板命令：
+git push -u origin master
+>git push -u固定命令
+  origin表示远程仓库的名字，我之前是取github
+  master表示本地的分支，all表示所有的分支
+
+我的实际命令:
+git push -u github --all
+或者
+git push -u github maste
+出现报错：
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/qswhynot/myexercise.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+意思是说远程仓库里有本地没有的文件，需要我先把远程仓库fetch到本地然后在推送.
+这里说明，在github上创建仓库是初始化了readme和license文件，这在本地是没有的。
+git fetch github master
+git merge -h（寻找如何merge）
+git merge --allow-unrelated-histories github/master
+以上命令做到了这一点
+然后就可以
+git push -u github master
+如果不是第一次则使用命令：git push origin master
+
+之后就是本地修改，add，commit然后push
+
+
+情景1：做了一些奇怪的事情
+显示在本地创建了分支dev，然后在分支上创建dev.txt文件，然后add，commit
+之后将这个dev分支push到github上
+git branch dev
+git checkout dev
+git add .
+git commit -m'change in dev'
+git push github --all
+顺利的在github上看到了dev分支
+然后又做了一件事情，将本地的dev分支删除了，注意这里没有merge到master
+也就是说master是没有dev.txt
+git checkout master
+git branch -D dev
+然后我想着如何把github上的dev分支fetch到本地
+git fetch github dev
+git branch -av
+>* master                8597178 Merge remote-tracking branch 'github/master'
+  remotes/github/dev    9cd2133 change in dev
+  remotes/github/master 8597178 Merge remote-tracking branch 'github/master'
+将github上的dev分支merge到master上
+
+git merge github/dev
+
+结果master还真的出现dev.txt
+然后.....
+git push github master
+将本地master推送到github
+继续折腾
+本地删除dev.txt然后推到github
+git add .
+git commit -m 'delete dev.txt in master'
+git push github master
+
+那么，至此，github上还有一个dev分支，怎么删除？
+直接可以在github上的branch选项删除
+那么，我们fetch到本地又是什么表现呢？
+git fetch github dev
+报错
+git branch -av
+>* master                2db411a delete dev.txt in master
+  remotes/github/dev    9cd2133 change in dev
+  remotes/github/master 2db411a delete dev.txt in master
+还有远程分支dev，而在github上是已经删除了的
+git push github --delete dev
+删除远程分支，但是显示失败，这个分支已经不存在
+那么，新的问题出现了，怎么将github上的分支更新到git的远程分支列表中？
+我们继续：
+在github创建new分支
+git fetch github
+git branch -a
+>* master
+  remotes/github/dev
+  remotes/github/master
+  remotes/github/new
+git push github --delete new
+删除这个new分支
+git branch -a
+>* master
+  remotes/github/dev
+  remotes/github/master
+
+同时，github上的new分支也一起删除了！！
+唯独这个本地branch列表还有个dev很奇怪，如何解决？？
+在github上新建dev分支，然后
+git push github --delete dev
+结果毫无疑问列表和github上都删除了分支。
+
+总结一点需要注意：
+我们将github仓库fetch下来，还需要和本地仓库合并
+
+git merge github/dev
