@@ -262,7 +262,7 @@ class SpiderNameSpider(scrapy.Spider):
    - `errback` (callable): 用于处理请求错误的回调函数。如果请求发生错误，将调用此函数处理。
    - `flags` (list): 一个包含请求标志的列表，用于控制请求的行为。
 
-5. closed()，当 Spider 关闭时，该方法会被调用.在这里一般会定义释放资源的一些操作或其他收尾操作。
+5. `closed()`，当 Spider 关闭时，该方法会被调用.在这里一般会定义释放资源的一些操作或其他收尾操作。
 
 ### 2.4.2 **middlewares.py**
 
