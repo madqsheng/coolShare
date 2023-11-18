@@ -1,5 +1,18 @@
 # overview
 
+参考：
+
+1. [Depthwise Separable Convolutions in PyTorch :: Päpper's Machine Learning Blog — This blog features state of the art applications in machine learning with a lot of PyTorch samples and deep learning code. You will learn about neural network optimization and potential insights for artificial intelligence for example in the medical domain. --- PyTorch 中的深度可分离卷积 :: Päpper 的机器学习博客 — 该博客介绍了机器学习中最先进的应用程序，包含大量 PyTorch 示例和深度学习代码。您将了解神经网络优化和人工智能的潜在见解，例如在医疗领域。 (paepper.com)](https://www.paepper.com/blog/posts/depthwise-separable-convolutions-in-pytorch/)
+2. [Depth-wise Convolution and Depth-wise Separable Convolution | by Atul Pandey | Medium --- 深度卷积和深度可分离卷积 |作者：阿图尔·潘迪 |中等的](https://medium.com/@zurister/depth-wise-convolution-and-depth-wise-separable-convolution-37346565d4ec)
+3. [A Basic Introduction to Separable Convolutions | by Chi-Feng Wang | Towards Data Science](https://towardsdatascience.com/a-basic-introduction-to-separable-convolutions-b99ec3102728)
+4. [Pytorch [Basics\] — Intro to CNN. This blog post takes you through the… | by Akshaj Verma | Towards Data Science --- Pytorch [基础知识] — CNN 简介。这篇博文将带您了解…… |通过阿克沙吉·维尔玛 |走向数据科学](https://towardsdatascience.com/pytorch-basics-how-to-train-your-neural-net-intro-to-cnn-26a14c2ea29)
+5. [pytorch之nn.Conv1d详解-CSDN博客](https://blog.csdn.net/sunny_xsc1994/article/details/82969867)
+6. [Keras之文本分类实现 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/29201491)
+7. [conv neural network - Understanding input shape to PyTorch conv1D? - Stack Overflow --- 卷积神经网络 - 了解 PyTorch conv1D 的输入形状？ - 堆栈溢出](https://stackoverflow.com/questions/62372938/understanding-input-shape-to-pytorch-conv1d)
+8. [Pytorch [Basics\] — Intro to CNN. This blog post takes you through the… | by Akshaj Verma | Towards Data Science --- Pytorch [基础知识] — CNN 简介。这篇博文将带您了解…… |通过阿克沙吉·维尔玛 |走向数据科学](https://towardsdatascience.com/pytorch-basics-how-to-train-your-neural-net-intro-to-cnn-26a14c2ea29)
+9. [PyTorch: Conv1D For Text Classification Tasks --- PyTorch：用于文本分类任务的 Conv1D (coderzcolumn.com)](https://coderzcolumn.com/tutorials/artificial-intelligence/pytorch-conv1d-for-text-classification)
+10. 
+
 ## 标准卷积：2d
 
 1. torch.nn.Conv2d
