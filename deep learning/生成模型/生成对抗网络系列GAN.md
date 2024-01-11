@@ -14,7 +14,7 @@
 
 7. [很棒的仓库Collection of generative models, e.g. GAN, VAE in Pytorch and Tensorflow](https://github.com/wiseodd/generative-models)
 
-   ![thumbnail](./../示例图片/thumbnail.png)
+   ![thumbnail](./../../示例图片/thumbnail.png)
 
 要点：
 

@@ -1,0 +1,1 @@
+[python - Understanding NumPy's einsum - Stack Overflow --- python - 了解NumPy的einsum - VoidCC](https://stackoverflow.com/questions/26089893/understanding-numpys-einsum)
