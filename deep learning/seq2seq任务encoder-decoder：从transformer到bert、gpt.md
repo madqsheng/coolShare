@@ -451,7 +451,7 @@ output.shape, len(state), state[0].shape, len(state[1]), state[1][0].shape
 参考：
 
 1. [很棒的网站哈佛nlp：The Annotated Transformer](http://nlp.seas.harvard.edu/2018/04/03/attention.html)
-2. [The Illustrated Transformer]([The Illustrated Transformer – Jay Alammar – Visualizing machine learning one concept at a time. (jalammar.github.io)](http://jalammar.github.io/illustrated-transformer/))
+2. [The Illustrated Transformer](http://jalammar.github.io/illustrated-transformer/)
 3. [Transformer Coding Details](https://kikaben.com/transformers-coding-details/)
 4. [How to code The Transformer in Pytorch](https://towardsdatascience.com/how-to-code-the-transformer-in-pytorch-24db27c8f9ec)
 5. [The Illustrated Transformer](http://jalammar.github.io/illustrated-transformer)
