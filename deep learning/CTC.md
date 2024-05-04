@@ -12,6 +12,4 @@
 
 
 
-
-
 [基于CTC的自动语音识别 --- Automatic Speech Recognition using CTC (keras.io)](https://keras.io/examples/audio/ctc_asr/)
